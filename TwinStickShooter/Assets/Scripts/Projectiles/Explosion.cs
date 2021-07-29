@@ -55,8 +55,10 @@ public class Explosion : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.gameObject.name);
         if (!existedForOneFrame)
         {
+            //if()
             other.GetComponent<CharacterCore>().TakeDamage(damage);
         }
     }

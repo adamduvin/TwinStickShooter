@@ -37,6 +37,13 @@ public class Turret : MonoBehaviour
     private HapticSource gunfireHapticSource;
     private AudioSource gunfireAudioSource;
 
+    [SerializeField]
+    private float shootShakeAmplitude = 0.1f;
+    [SerializeField]
+    private float shootShakeFrequency = 0.1f;
+    [SerializeField]
+    private float shootShakeDuration = 0.1f;
+
     private void Awake()
     {
         playerInput = new PlayerInput();
@@ -104,6 +111,11 @@ public class Turret : MonoBehaviour
                     if(currentSpawnPoint >= projectileSpawnPoints.Length)
                     {
                         currentSpawnPoint = 0;
+                    }
+
+                    if(CameraShake.Instance.GetCurrentShakeAmplitude() <= 0f)
+                    {
+                        CameraShake.Instance.ShakeCamera(shootShakeAmplitude, shootShakeFrequency, shootShakeDuration);
                     }
 
 

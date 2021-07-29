@@ -33,6 +33,7 @@ public class SeekRadius : MonoBehaviour
         if (other.gameObject.layer == 6)         // Player Layer
         {
             exploderEnemyMovement.IsPlayerInRange = false;
+            exploderEnemyMovement.Agent.isStopped = false;
             exploderEnemyMovement.Pathfind();
         }
     }

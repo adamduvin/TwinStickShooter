@@ -45,7 +45,14 @@ public class ExploderEnemyMovement : MonoBehaviour
     [SerializeField]
     private GameObject explosion;
 
-    
+    private ExploderEnemyCore exploderEnemyCore;
+
+
+    private void Awake()
+    {
+        player = GameObject.Find("Player");
+    }
+
 
     // Start is called before the first frame update
     void Start()
@@ -55,6 +62,7 @@ public class ExploderEnemyMovement : MonoBehaviour
         recheckPathTimer = recheckPathPeriod;
         material = GetComponent<Renderer>().material;
         characterController = GetComponent<CharacterController>();
+        exploderEnemyCore = GetComponent<ExploderEnemyCore>();
     }
 
     // Update is called once per frame
@@ -68,6 +76,13 @@ public class ExploderEnemyMovement : MonoBehaviour
                 if (recheckPathTimer <= 0f)
                 {
                     Pathfind();
+                }
+                else if(agent.remainingDistance <= agent.stoppingDistance)
+                {
+                    if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+                    {
+                        Pathfind();
+                    }
                 }
             }
             else
@@ -116,13 +131,13 @@ public class ExploderEnemyMovement : MonoBehaviour
 
         if(explosionTimer >= explosionTime)
         {
-            CreateExplosion();
+            exploderEnemyCore.Die();
         }
     }
     public void CreateExplosion()
     {
         GameObject explosionInstance = Instantiate(explosion, transform.position, Quaternion.identity);
         explosionInstance.GetComponent<Explosion>().Setup(explosionRadius, explosionDamage);
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 }

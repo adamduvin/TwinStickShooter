@@ -14,5 +14,6 @@ public class ExploderEnemyCore : EnemyCore
     public override void Die()
     {
         exploderEnemyMovement.CreateExplosion();
+        base.Die();
     }
 }
